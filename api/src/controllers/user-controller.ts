@@ -15,7 +15,7 @@ export default class UserController {
             response
                 .status(status.UNAUTHORIZED)
                 .send({
-                    "message": "Invalid email or password"
+                    "error": "Invalid email or password"
                 }
             );    
         }
