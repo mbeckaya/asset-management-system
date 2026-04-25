@@ -22,7 +22,7 @@ export default class UserController {
 
         response.status(status.OK).send({
             "message": "Login successful",
-            ...user,
+            user,
         });
     }
 }
