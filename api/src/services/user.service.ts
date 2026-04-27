@@ -1,7 +1,7 @@
 import { Knex } from "knex";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import type { User } from "../types/user.type";
+import type { User } from "@shared/types/user.type";
 
 export default class UserService {
     constructor(protected db: Knex) {}

@@ -7,8 +7,8 @@
 
     import { useUserStore } from "@/stores/user.store";
     import { API_BASE } from "@/utils/constants";
-    import type { UserLogin } from "@/types/user-login.type";
-    import type { User } from "@/types/user.type";
+    import type { UserLogin } from "@shared/types/user-login.type";
+    import type { User } from "@shared/types/user.type";
         
     import LoadingSpinner from "@/components/ui/LoadingSpinner.vue";
     import AlertBox from "@/components/ui/AlertBox.vue";
