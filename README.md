@@ -12,12 +12,17 @@ A system for managing company IT assets such as laptops, monitors, and other har
 ---
 
 ## 🧩 Planned Features
-- Authentication (JWT) [Done]
-- CRUD for devices [In progress]
-    - API [In progress]
-    - Frontend [In progress]
-- Assignment of assets to employees [Open]
-- Warranty tracking [Open]
-- Email notifications [Open]
-- Search & filtering [Open]
-- Dashboard with KPIs [Open]
+**Legend:** ✅ Done | 🚧 In Progress | ❌ Open
+
+- 🔐 Authentication (JWT) ✅
+- 🗄️ CRUD for devices 🚧
+    - 📋 Get all ✅
+    - 🔍 Get by id 🚧
+    - ➕ Create a new ❌
+    - ✏️ Update by id ❌
+    - 🗑️ Delete by id ❌
+- 👤 Assignment of assets to employees ❌
+- 🛡️ Warranty tracking ❌
+- 📧 Email notifications ❌
+- 🔎 Search & filtering ❌
+- 📊 Dashboard with KPIs ❌
