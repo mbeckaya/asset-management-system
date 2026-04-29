@@ -11,6 +11,7 @@ export default class DeviceService {
             .db("devices")
             .select({
                 id: "id",
+                brandId: "brand_id",
                 deviceTypeId: "device_type_id",
                 resellerId: "reseller_id",
                 deviceStatusId: "device_status_id",

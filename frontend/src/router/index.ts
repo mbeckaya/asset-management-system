@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LoginPage from "@/pages/LoginPage.vue";
+import DeviceListPage from "@/pages/DeviceListPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,6 +13,11 @@ const router = createRouter({
       path: "/login",
       name: "user.login",
       component: LoginPage,
+    },
+    {
+      path: "/devices",
+      name: "device.list",
+      component: DeviceListPage,
     },
   ],
 });

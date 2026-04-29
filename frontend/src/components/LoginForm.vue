@@ -1,12 +1,13 @@
 <script setup lang="ts">
-    import { ref } from "vue";
+    import { useRouter } from "vue-router";
     import axios from "axios";
     import { Field, Form, ErrorMessage, defineRule } from "vee-validate";
     import { required, email, min } from "@vee-validate/rules";
     import { storeToRefs } from "pinia";
 
     import { useUserStore } from "@/stores/user.store";
-    import { API_BASE } from "@/utils/constants";
+    import { useApi } from "@/composables/useApi";
+    import { API_BASE, UI_ANIMATION_RUNTIME } from "@/utils/constants";
     import type { UserLogin } from "@shared/types/user-login.type";
     import type { User } from "@shared/types/user.type";
         
@@ -16,49 +17,36 @@
     import FormLegend from "@/components/forms/FormLegend.vue";
     import FormLabel from "@/components/forms/FormLabel.vue";
 
+    const router = useRouter();
+
     defineRule('required', required);
     defineRule('email', email);
     defineRule('min', min);
 
-    const errorMsg = ref("");
-    const isLoading = ref(false);
-    const isSuccess = ref(false);
-    const userStore = useUserStore();
-    const { user } = storeToRefs(userStore);
+    const { user } = storeToRefs(useUserStore());
+    const { isLoading, errorMsg, request } = useApi();
 
     const handleSubmit = async (formData: UserLogin) => {
-        try {
-            errorMsg.value = "";
-            isLoading.value = true;
+        const result = await request(() => 
+            axios.post<{ user: User }>(
+                `${API_BASE}/login`, 
+                formData
+            )
+        );
 
-            const { data } = await axios.post<{ user: User }>(`${API_BASE}/login`, formData);
-            user.value = data.user;
+        if (!result) return;
 
-            isSuccess.value = true;
-        } catch (error) {
-            if (!axios.isAxiosError(error)) {
-                errorMsg.value = "Something went wrong. Please try again later.";
-                return;
-            }
-
-            const apiError = error.response?.data?.error;
-
-            if (error.response?.status) {
-                const messages = Array.isArray(apiError)
-                    ? apiError.map((e) => e?.message).filter(Boolean)
-                    : [apiError];
-
-                errorMsg.value = messages.join("\n");
-            } else {
-                errorMsg.value = "No connection. Please check your internet and try again.";
-            }
-        } finally {
-            isLoading.value = false;
-        }
-    }
+        user.value = result.data.user;
+        
+        setTimeout(() => {
+            router.push({ name: "device.list" });
+        }, UI_ANIMATION_RUNTIME);
+    };
 </script>
 
 <template>
+    <h1 class="text-xl">Login Form</h1>
+
     <Form @submit="handleSubmit as any">
         <FormFieldset class="p-4">
             <FormLegend>Login Form</FormLegend>
@@ -67,10 +55,6 @@
 
             <AlertBox v-else-if="errorMsg" type="error">
                 {{ errorMsg }}
-            </AlertBox>
-
-            <AlertBox v-else-if="isSuccess" type="success">
-                Login was successful!
             </AlertBox>
           
             <div class="py-2">

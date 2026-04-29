@@ -14,7 +14,7 @@ A system for managing company IT assets such as laptops, monitors, and other har
 ## 🧩 Planned Features
 - Authentication (JWT) [Done]
 - CRUD for devices [In progress]
-    - API [Done]
+    - API [In progress]
     - Frontend [In progress]
 - Assignment of assets to employees [Open]
 - Warranty tracking [Open]

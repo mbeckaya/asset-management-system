@@ -1,8 +1,7 @@
 <script setup lang="ts">
+    import DeviceList from '@/components/DeviceList.vue';
 </script>
 
 <template>
-    <h1>Device List Page</h1>
-
-    
+    <DeviceList />
 </template>
