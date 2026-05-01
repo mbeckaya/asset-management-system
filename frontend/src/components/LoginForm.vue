@@ -6,7 +6,7 @@
     import { storeToRefs } from "pinia";
 
     import { useUserStore } from "@/stores/user.store";
-    import { useApi } from "@/composables/useApi";
+    import { useApi } from "@/composables/useApi.composable";
     import { API_BASE, UI_ANIMATION_RUNTIME } from "@/utils/constants";
     import type { UserLogin } from "@shared/types/user-login.type";
     import type { User } from "@shared/types/user.type";
@@ -23,7 +23,8 @@
     defineRule('email', email);
     defineRule('min', min);
 
-    const { user } = storeToRefs(useUserStore());
+    const userStore = useUserStore();
+    const { user } = storeToRefs(userStore);
     const { isLoading, errorMsg, request } = useApi();
 
     const handleSubmit = async (formData: UserLogin) => {

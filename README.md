@@ -17,8 +17,8 @@ A system for managing company IT assets such as laptops, monitors, and other har
 - 🔐 Authentication (JWT) ✅
 - 🗄️ CRUD for devices 🚧
     - 📋 Get all ✅
-    - 🔍 Get by id 🚧
-    - ➕ Create a new ❌
+    - 🔍 Get by id ✅
+    - ➕ Create a new 🚧
     - ✏️ Update by id ❌
     - 🗑️ Delete by id ❌
 - 👤 Assignment of assets to employees ❌

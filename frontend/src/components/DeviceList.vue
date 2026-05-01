@@ -1,11 +1,12 @@
 <script setup lang="ts">
     import { ref } from "vue";
+    import { RouterLink } from "vue-router";
     import { storeToRefs } from "pinia";
     import axios from "axios";
     import dayjs from "dayjs";
 
     import { useUserStore } from "@/stores/user.store";
-    import { useApi } from "@/composables/useApi";
+    import { useApi } from "@/composables/useApi.composable";
     import { API_BASE } from "@/utils/constants";
     import { getAuthHeaders } from "@/utils/helper";
     import type { Device } from '@shared/types/device.type';
@@ -64,6 +65,7 @@
                     <th>Status</th>
                     <th>Purchased</th>
                     <th>Model</th>
+                    <th>Action</th>
                 </tr>
             </thead>
 
@@ -79,6 +81,14 @@
                     <td>{{ device.deviceStatusId }}</td>
                     <td>{{ dayjs(device.purchasedAt).format("DD.MM.YYYY") }}</td>
                     <td>{{ device.modelName }}</td>
+                    <td>
+                        <RouterLink 
+                            :to="{ name: 'device.item', params: { id: device.id, }, }" 
+                            class="btn btn-soft"
+                        >
+                            Details
+                        </RouterLink>
+                    </td>
                 </tr>
             </tbody>
         </table>
