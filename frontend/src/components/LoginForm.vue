@@ -1,13 +1,13 @@
 <script setup lang="ts">
     import { useRouter } from "vue-router";
-    import axios from "axios";
     import { Field, Form, ErrorMessage, defineRule } from "vee-validate";
     import { required, email, min } from "@vee-validate/rules";
     import { storeToRefs } from "pinia";
 
     import { useUserStore } from "@/stores/user.store";
     import { useApi } from "@/composables/useApi.composable";
-    import { API_BASE, UI_ANIMATION_RUNTIME } from "@/utils/constants";
+    import { httpClient } from "@/utils/http"; 
+    import { UI_MESSAGE_DURATION_MS } from "@/utils/constants";
     import type { UserLogin } from "@shared/types/user-login.type";
     import type { User } from "@shared/types/user.type";
         
@@ -29,9 +29,8 @@
 
     const handleSubmit = async (formData: UserLogin) => {
         const result = await request(() => 
-            axios.post<{ user: User }>(
-                `${API_BASE}/login`, 
-                formData
+            httpClient.post<{ user: User }>(
+                `/login`, formData
             )
         );
 
@@ -41,7 +40,7 @@
         
         setTimeout(() => {
             router.push({ name: "device.list" });
-        }, UI_ANIMATION_RUNTIME);
+        }, UI_MESSAGE_DURATION_MS);
     };
 </script>
 

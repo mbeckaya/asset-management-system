@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { useRoute } from "vue-router";
-    import DeviceItem from "@/components/DeviceItem.vue";
+    import DeviceItem from "@/components/devices/DeviceItem.vue";
 
     const route = useRoute();
     const id = Number(route.params.id);

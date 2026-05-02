@@ -1,31 +1,26 @@
 <script setup lang="ts">
     import { ref } from "vue";
     import { RouterLink } from "vue-router";
-    import { storeToRefs } from "pinia";
-    import axios from "axios";
     import dayjs from "dayjs";
 
-    import { useUserStore } from "@/stores/user.store";
     import { useApi } from "@/composables/useApi.composable";
-    import { API_BASE } from "@/utils/constants";
-    import { getAuthHeaders } from "@/utils/helper";
+    import { httpClient } from "@/utils/http"; 
     import type { Device } from '@shared/types/device.type';
     import type { Pagination } from "@shared/types/pagination.type";
 
     import LoadingSpinner from "@/components/ui/LoadingSpinner.vue";
     import AlertBox from "@/components/ui/AlertBox.vue";
     
-    const { user } = storeToRefs(useUserStore());
     const { isLoading, errorMsg, request } = useApi();
     const deviceList = ref<Device[]>([]);
     const currentPage = ref(1);
     const numberOfPages = ref(0);
+    const pageLimit = ref(5);
 
     const fetchDevices = async (pageNumber: number) => {
         const result = await request(() =>
-            axios.get<Pagination<Device>>(
-                `${API_BASE}/devices?page=${pageNumber}&limit=5`,
-                { headers: getAuthHeaders(user.value?.accessToken) }
+            httpClient.get<Pagination<Device>>(
+                `/devices?page=${pageNumber}&limit=${pageLimit.value}`
             )
         );
 

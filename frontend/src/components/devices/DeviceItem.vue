@@ -1,13 +1,9 @@
 <script setup lang="ts">
     import { ref, computed } from "vue";
-    import { storeToRefs } from "pinia";
-    import axios from "axios";
     import dayjs from "dayjs";
 
-    import { useUserStore } from "@/stores/user.store";
     import { useApi } from "@/composables/useApi.composable";
-    import { getAuthHeaders } from "@/utils/helper";
-    import { API_BASE } from "@/utils/constants";
+    import { httpClient } from "@/utils/http"; 
     import type { Device } from '@shared/types/device.type';
 
     import LoadingSpinner from "@/components/ui/LoadingSpinner.vue";
@@ -15,17 +11,12 @@
 
     const { id } = defineProps<{ id: number }>();
 
-    const { user } = storeToRefs(useUserStore());
-
     const { isLoading, errorMsg, request } = useApi();
     const device = ref<Device | null>(null);
 
     const fetchDevice = async () => {
         const result = await request(() =>
-            axios.get<Device>(
-                `${API_BASE}/devices/${id}`,
-                { headers: getAuthHeaders(user.value?.accessToken) }
-            )
+            httpClient.get<Device>(`/devices/${id}`)
         );
 
         if (!result) return;
